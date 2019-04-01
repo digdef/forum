@@ -75,6 +75,7 @@ a {
 	width: 120px;
 	margin-top: 5px;
 	transition: 0.3s;
+	float: right;
 }
 
 .news-link:hover {

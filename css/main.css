@@ -13,7 +13,9 @@ header {
 	background: #323232;
 	height: 50px;
 	display: flex;
-
+	width: 100%;
+	z-index: 999;
+	position: fixed;
 }
 
 button {
@@ -39,7 +41,7 @@ a {
 	width: 185px;
 }
 
-.nav-btn:hover {
+.nav-btn:hover, .sidebar-btn:hover {
 	background: #46B2F0;
 }
 
@@ -75,6 +77,7 @@ a {
 	width: 120px;
 	margin-top: 5px;
 	transition: 0.3s;
+	float: right;
 }
 
 .news-link:hover {
@@ -86,8 +89,7 @@ a {
 .news-img {
 	padding-bottom: 20px;
 	padding-top: 20px;
-	display: flex;
-	justify-content: center;
+	text-align: center;
 }
 
 .news-img img {
@@ -161,4 +163,82 @@ a {
 	max-width: 50px;
 	max-height: 50px;
 	margin-right: 5px;
+}
+
+#sidebar{
+	position: fixed;
+	width: 250px;
+	background: #1c1f23;
+	z-index: 111;
+	left: -250px;
+	transition: all 200ms;
+	height: 100%;
+	padding-top: 50px;
+}
+
+#sidebar.active{
+	left: 0px;
+}
+
+.sidebar-btn {
+	color: white;
+	font-size: 25px;
+	transition: 0.3s;
+	width: 100%;
+	height: 50px;
+}
+
+.toggle-btn{
+	position: absolute;
+	padding: 9px 30px;
+	cursor: pointer;
+}
+
+.toggle-btn span{
+	display: block;
+	width: 20px;
+	height: 4px;
+	background-color: #E0E5EA;
+	margin: 4px 0;
+}
+
+.img {
+	width: 300px;
+}
+
+@media (min-width: 1000px) {
+	.toggle-btn{
+		visibility: hidden;
+		display: none;
+	}
+	#sidebar {
+		visibility: hidden;
+		display: none;		
+	}
+}
+
+@media (max-width: 999px) {
+	.nav-btn {
+		visibility: hidden;
+		display: none;
+	}
+	.site-name {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	header {
+		text-align: center;
+		display: block;
+	}
+	.preview {
+		align-items: center;
+	}
+}
+@media (max-width: 820px) {
+	.preview {
+		display: block;
+	}
+	.img {
+		width: 100%;
+	}
 }

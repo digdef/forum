@@ -2,20 +2,31 @@
 <html>
 <head>
 	<title>forum</title>
+	<meta charset="UTF-8">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 <body>
-	<header>
+	<header class="header">
+		<div class="toggle-btn" onclick="openMenu()">
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
 		<h1 class="site-name"><a style="color: white" href="">Forum</a></h1>
 		<button onclick="location='forum'" class="nav-btn">Форум</button>
 		<button class="nav-btn">Категории</button>
 		<button class="nav-btn">Поиск</button>
 	</header>
-	<h1 style="text-align: center; margin: 1%;">Новости</h1>
+	<div id="sidebar">
+		<button onclick="location='forum'" class="sidebar-btn">Форум</button>
+		<button class="sidebar-btn">Категории</button>
+		<button class="sidebar-btn">Поиск</button>
+	</div>
+	<h1 style="text-align: center; padding-top: 60px; padding-bottom: 10px;">Новости</h1>
 	<article class='news'>
 		<div class="preview">
 			<a style="padding-right: 20px;" href="">
-				<img style="width: 300px;" src="img/1.jpg">
+				<img class="img" src="img/1.jpg">
 			</a>
 			<div>
 				<h2>lorem</h2>
@@ -29,5 +40,11 @@
 			</div>
 		</div>
 	</article>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script>
+		function openMenu(){
+			document.getElementById("sidebar").classList.toggle('active');
+		}
+	</script>
 </body>
 </html>
