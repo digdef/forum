@@ -77,7 +77,7 @@ a {
 	padding:3px;
 	width: 130px;
 	margin-top: 5px;
-	transition: 0.3s;
+	transition: 0.2s;
 	float: right;
 	outline: none;
 }
@@ -214,6 +214,42 @@ a {
 	margin-left: 10.5%;
 }
 
+#genre {
+	font-size: 12px;
+	width: 150px;
+	transition: 0.2s;
+	background: none;
+	margin: 20px auto;
+	text-align: center;
+	border: 2px solid #46B2F0;
+	padding: 14px 10px;
+	outline: none;
+	border-radius: 24px;
+	color: white;
+}
+
+#genre:hover {
+	background: #46B2F0;
+	color: white;
+}
+
+#genre-bar {
+	margin: 10%;
+	margin-top: 0;
+	margin-bottom: 0;
+	text-align: center;	
+}
+
+#vipad{
+	background: #1c1f23;
+}
+
+@media (max-width: 451px) {
+	#genre{
+		width: 49%;
+	}
+}
+
 @media (min-width: 1000px) {
 	.toggle-btn{
 		visibility: hidden;
@@ -260,3 +296,5 @@ a {
 		width: 70%;
 	}
 }
+
+
