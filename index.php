@@ -19,8 +19,8 @@
 		<button class="nav-btn">Аккаунт</button>
 	</header>
 	<div id="sidebar">
-		<button onclick="location='/'" onclick="location='forum'" class="sidebar-btn">Блог</button>
-		<button class="sidebar-btn">Категории</button>
+		<button onclick="location='forum'" onclick="location='forum'" class="sidebar-btn">Форум</button>
+		<button class="sidebar-btn" onclick="toggle('#vipad');">Категории</button>
 		<button class="sidebar-btn">Аккаунт</button>
 	</div>
 	<div style="padding-top: 50px;"></div>

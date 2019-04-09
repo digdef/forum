@@ -170,7 +170,7 @@ a {
 	background: #1c1f23;
 	z-index: 111;
 	left: -250px;
-	transition: all 200ms;
+	transition: 0.4s;
 	height: 100%;
 	padding-top: 50px;
 }
@@ -246,7 +246,7 @@ a {
 
 @media (max-width: 451px) {
 	#genre{
-		width: 49%;
+		width: 100%;
 	}
 }
 
