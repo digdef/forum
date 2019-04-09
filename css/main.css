@@ -65,7 +65,8 @@ a {
 
 .preview {
 	display: flex;
-	margin: 30px
+	margin: 30px;
+	text-align: justify;
 }
 
 .news-link {
@@ -74,10 +75,11 @@ a {
 	border-radius: 20px;
 	font-size: 20px;
 	padding:3px;
-	width: 120px;
+	width: 130px;
 	margin-top: 5px;
 	transition: 0.3s;
 	float: right;
+	outline: none;
 }
 
 .news-link:hover {
@@ -96,6 +98,7 @@ a {
    	margin-right: 10.5%;
 	margin-left: 10.5%;
 	font-size: 18px;
+	text-align: justify;
 }
 
 .box-comment{
@@ -137,8 +140,6 @@ a {
 	display: flex;
 	background: none;
 	margin: 20px auto;
-	margin-right: 10.5%;
-	margin-left: 10.5%;
 }
 
 #comment1 {
@@ -147,6 +148,8 @@ a {
 	border: 2px solid #46B2F0;
 	padding: 14px 10px;
 	border-radius: 24px;
+	width: 100%;
+	text-align: justify;
 }
 
 .container {
@@ -202,6 +205,15 @@ a {
 	width: 300px;
 }
 
+.forum-link {
+	border: 2px solid #46B2F0;
+}
+
+.comment-group {
+	margin-right: 10.5%;
+	margin-left: 10.5%;
+}
+
 @media (min-width: 1000px) {
 	.toggle-btn{
 		visibility: hidden;
@@ -246,5 +258,5 @@ a {
 	}
 	.news-img img {
 		width: 70%;
-	}	
+	}
 }

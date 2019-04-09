@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>forum</title>
+	<meta charset="UTF-8">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
-	<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>	
+	<title>forum</title>
 </head>
 <body>
 	<header>
@@ -12,16 +14,17 @@
 			<span></span>
 			<span></span>
 		</div>
-		<h1 class="site-name"><a style="color: white" href="">Forum</a></h1>
+		<h1 class="site-name"><a style="color: white" href="/">Forum</a></h1>
 		<button onclick="location='forum'" class="nav-btn">Форум</button>
 		<button class="nav-btn">Категории</button>
-		<button class="nav-btn">Поиск</button>
+		<button class="nav-btn">Аккаунт</button>
 	</header>
 	<div id="sidebar">
-		<button onclick="location='forum'" class="sidebar-btn">Форум</button>
+		<button onclick="location='/'" onclick="location='forum'" class="sidebar-btn">Блог</button>
 		<button class="sidebar-btn">Категории</button>
-		<button class="sidebar-btn">Поиск</button>
-	</div>
+		<button class="sidebar-btn">Аккаунт</button>
+	</div>	
+	<div style="padding-top: 60px;"></div>
 	<article>
 		<div>
 			<h1 style="text-align: center;padding-top: 10px">lorem</h1>
@@ -47,19 +50,21 @@
 				<button type="submit" name="add_comment"><i class="far fa-paper-plane"></i></button>
 			</form>
 		</div>
-		<div id="comment">
-			<div>
-				<div style="text-align: center;">
-					<span>123</span>
+		<div class="comment-group">
+			<div id="comment">
+				<div>
+					<div style="text-align: center;">
+						<span>123</span>
+					</div>
+					<img id="avatar_img" src="img/avatar.png"></p>
 				</div>
-				<img id="avatar_img" src="img/avatar.png"></p>
-			</div>
-			<div id="comment1">
-				<span>
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-					quis nostrud exercitation ullamco
-				</span>
+				<div id="comment1">
+					<span>
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+						quis nostrud exercitation ullamco
+					</span>
+				</div>
 			</div>
 		</div>
 	</div>
