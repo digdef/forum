@@ -17,12 +17,18 @@
 		<h1 class="site-name"><a style="color: white" href="/">Forum</a></h1>
 		<button onclick="location='/'" class="nav-btn">Блог</button>
 		<button class="nav-btn" onclick="toggle('#vipad');">Категории</button>
-		<button class="nav-btn">Аккаунт</button>
+		<button class="nav-btn" onclick="location='../account'">Аккаунт</button>
+		<form class="search-box " name="search" method="post">
+			<input class="search-txt" type="search" name="search" placeholder="Type ro search">
+			<button name="submit" type="submit" class="search-btn btn btn-link">
+				<i class="fas fa-search"></i>
+			</button> 
+		</form>		
 	</header>
 	<div id="sidebar">
-		<button onclick="location='/'" onclick="location='/'" class="sidebar-btn">Блог</button>
+		<button onclick="location='/'" class="sidebar-btn">Блог</button>
 		<button class="sidebar-btn" onclick="toggle('#vipad');">Категории</button>
-		<button class="sidebar-btn">Аккаунт</button>
+		<button class="sidebar-btn" onclick="location='../account'">Аккаунт</button>
 	</div>
 	<div style="padding-top: 50px;"></div>
 	<div id="vipad">
