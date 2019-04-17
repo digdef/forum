@@ -1,3 +1,6 @@
+<?php
+require "system/config.php";
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,24 +11,32 @@
 	<title>forum</title>
 </head>
 <body>
-	<header class="header">
-		<div class="toggle-btn" onclick="openMenu()">
-			<span></span>
-			<span></span>
-			<span></span>
+	<header>
+		<div class="header">
+			<div class="toggle-btn" onclick="openMenu()">
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+			<h1 class="site-name"><a style="color: white" href="/">Forum</a></h1>
+			<button onclick="location='forum'" class="nav-btn">Форум</button>
+			<button class="nav-btn" onclick="toggle('#vipad');">Категории</button>
+			<button class="nav-btn" onclick="location='account'">Аккаунт</button>
+			<form class="search-box" name="search" method="post">
+				<input class="search-txt" type="search" name="search" placeholder="Type ro search">
+				<button name="submit" type="submit" class="search-btn btn btn-link">
+					<i class="fas fa-search"></i>
+				</button> 
+			</form>
 		</div>
-		<h1 class="site-name"><a style="color: white" href="/">Forum</a></h1>
-		<button onclick="location='forum'" class="nav-btn">Форум</button>
-		<button class="nav-btn" onclick="toggle('#vipad');">Категории</button>
-		<button class="nav-btn" onclick="location='account'">Аккаунт</button>
-		<form class="search-box " name="search" method="post">
+	</header>
+	<div id="sidebar">
+		<form class="sidebar-search-box" name="search" method="post">
 			<input class="search-txt" type="search" name="search" placeholder="Type ro search">
 			<button name="submit" type="submit" class="search-btn btn btn-link">
 				<i class="fas fa-search"></i>
-			</button> 
+			</button>
 		</form>
-	</header>
-	<div id="sidebar">
 		<button onclick="location='forum'" onclick="location='forum'" class="sidebar-btn">Форум</button>
 		<button class="sidebar-btn" onclick="toggle('#vipad');">Категории</button>
 		<button class="sidebar-btn" onclick="location='account'">Аккаунт</button>
@@ -43,16 +54,11 @@
 	<article class='news'>
 		<div class="preview">
 			<a style="padding-right: 20px;" href="">
-				<img class="img" src="img/1.jpg">
+				<img class="img" src="<?php echo $news->img; ?>">
 			</a>
 			<div>
-				<h2>lorem</h2>
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>
+				<h2><?php echo $news->title; ?></h2>
+				<?php echo $news->text; ?><br>
 				<button onclick="location='news.php'" class="news-link">Подробнее</button>
 			</div>
 		</div>
