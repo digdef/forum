@@ -1,5 +1,5 @@
 <?php
-require "system/config.php";
+require "system/source.php";
 ?>
 <!DOCTYPE html>
 <html>
@@ -51,18 +51,8 @@ require "system/config.php";
 		</div>
 	</div>
 	<h1 style="text-align: center; padding-bottom: 10px; padding-top: 10px;">Новости</h1>
-	<article class='news'>
-		<div class="preview">
-			<a style="padding-right: 20px;" href="">
-				<img class="img" src="<?php echo $news->img; ?>">
-			</a>
-			<div>
-				<h2><?php echo $news->title; ?></h2>
-				<?php echo $news->text; ?><br>
-				<button onclick="location='news.php'" class="news-link">Подробнее</button>
-			</div>
-		</div>
-	</article>
+	<?php $news = new News();?>
+
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="js/main.js"></script>
 </body>
