@@ -52,7 +52,9 @@ require "system/source.php";
 	</div>
 	<h1 style="text-align: center; padding-bottom: 10px; padding-top: 10px;">Новости</h1>
 	<?php $news = new News();?>
-
+	<div style="text-align: center;">
+		<?php $pagination = new pagination();?>
+	</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="js/main.js"></script>
 </body>
