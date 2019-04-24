@@ -51,9 +51,9 @@ require "system/source.php";
 		</div>
 	</div>
 	<h1 style="text-align: center; padding-bottom: 10px; padding-top: 10px;">Новости</h1>
-	<?php $news = new News();?>
+	<?php $news = new News('news');?>
 	<div style="text-align: center;">
-		<?php $pagination = new pagination();?>
+		<?php $pagination = new pagination('news');?>
 	</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="js/main.js"></script>

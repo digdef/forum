@@ -1,3 +1,6 @@
+<?php
+require "../system/source.php";
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,19 +45,9 @@
 		</div>
 	</div>
 	<h1 style="text-align: center; padding-bottom: 10px; padding-top: 10px;">Форум</h1>
-	<div class='news'>
-		<div class="preview">
-			<div>
-				<h2>lorem</h2>
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>
-				<button onclick="location='forum.php'" class="news-link">Обсуждение</button>
-			</div>
-		</div>
+	<?php $news = new News('forum');?>
+	<div style="text-align: center;">
+		<?php $pagination = new pagination('forum');?>
 	</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="../js/main.js"></script>
