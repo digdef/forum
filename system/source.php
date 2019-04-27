@@ -4,7 +4,7 @@ class News {
 
 	public function __construct($table) {
 
-		include"config.php";
+		include "config.php";
 
 		$num = 5; 
 		$page = 1;
@@ -48,7 +48,7 @@ class article {
 
 	public function __construct($table) {
 
-		include"config.php";
+		include "config.php";
 
 		$article = mysqli_query($connection, "SELECT * FROM $table WHERE `id` = ".(int) $_GET['id']);
 
@@ -75,7 +75,7 @@ class pagination {
 
 	public function __construct($table) {
 
-		include"config.php";
+		include "config.php";
 
 		$num = 4; 
 		$page = 1;
@@ -102,11 +102,11 @@ class pagination {
 	}
 }
 
-class coment {
+class comment {
 
-	public function coments() {
+	public function comments () {
 
-		include"config.php";
+		include "config.php";
 		
 		$article = mysqli_query($connection, "SELECT * FROM `news` WHERE `id` = ".(int) $_GET['id']);
 		$art = mysqli_fetch_assoc($article);
@@ -127,9 +127,9 @@ class coment {
 		}
 	}
 
-	public function add_coment() {
+	public function add_comment() {
 		
-		include"config.php";
+		include "config.php";
 
 		$article = mysqli_query($connection, "SELECT * FROM `news` WHERE `id` = ".(int) $_GET['id']);
 		$art = mysqli_fetch_assoc($article);
@@ -162,11 +162,140 @@ class categories {
 
 	public function __construct() {
 
-		include"config.php";
+		include "config.php";
 
 		$categories =mysqli_query($connection, "SELECT * FROM `categories`");
 		while ($cat = mysqli_fetch_assoc($categories)){
 			echo'<button onclick="location=`/categories.php?id='.$cat['id'].'`" id="genre">'.$cat['categories'].'</button>';
+		}
+	}
+}
+
+class account {
+
+	public function generateSalt() {
+
+		$salt = '';
+		$saltLength = 8;
+		for($i=0; $i<$saltLength; $i++) {
+			$salt .= chr(mt_rand(33,126));
+		}
+		return $salt;
+	}
+
+	public function sign_in() {
+
+		include "config.php";
+		$data =$_POST;
+
+		if (isset($data['do_login'])){
+			if ( !empty($data['password']) and !empty($data['login']) ) {
+				$login = $data['login'];
+				$login = strip_tags($login);
+				$login = mysqli_real_escape_string($connection, $login);
+				$password = $data['password']; 
+				$password = strip_tags($password);
+				$password = mysqli_real_escape_string($connection, $password);	
+				$query = 'SELECT*FROM users WHERE login="'.$login.'"';
+				$result = mysqli_query($connection, $query); 
+				$user = mysqli_fetch_assoc($result); 
+				if (!empty($user)) {
+					$saltedPassword =$user['password'];
+					if (password_verify ($password ,$saltedPassword)) {
+						session_start(); 
+						$_SESSION['auth'] = true; 
+						$_SESSION['id'] = $user['id']; 
+						$_SESSION['login'] = $user['login'];
+						if ( !empty($_REQUEST['remember']) and $_REQUEST['remember'] == 1 ) {
+			
+							$key = generateSalt(); 
+							setcookie('login', $user['login'], time()+60*60*24*30); 
+							setcookie('key', $key, time()+60*60*24*30); 
+							$query = 'UPDATE users SET cookie="'.$key.'" WHERE login="'.$login.'"';
+							mysqli_query($connection, $query);
+						}
+						header("location: index.php");
+					}
+					else {
+						$errors[] = 'Введенный пароль неверен!';
+					}
+				} else {
+					$errors[] = 'Такого пользователя не существует!';
+				}
+			}
+		}
+
+		if (empty($_SESSION['auth']) or $_SESSION['auth'] == false) {
+			if ( !empty($_COOKIE['login']) and !empty($_COOKIE['key']) ) {
+				$login = $_COOKIE['login']; 
+				$key = $_COOKIE['key'];
+				$query = 'SELECT*FROM users WHERE login="'.$login.'" AND cookie="'.$key.'"';
+				$result = mysqli_fetch_assoc(mysqli_query($connection, $query)); 
+				if (!empty($result)) {
+					session_start(); 
+					$_SESSION['auth'] = true; 
+					$_SESSION['id'] = $user['id']; 
+					$_SESSION['login'] = $user['login']; 
+				}
+			}
+		} else {
+			header("location: account.php");
+		}
+	}
+
+	public function create_account() {
+
+		include "config.php";
+
+		$login = $data['login'];
+		$login = strip_tags($login);
+		$login = mysqli_real_escape_string($connection, $login);
+
+		$email = $data['email'];
+		$email = strip_tags($email);
+		$email = mysqli_real_escape_string($connection, $email);
+
+		$name = $data['name'];
+		$name = strip_tags($name);
+		$name = mysqli_real_escape_string($connection, $name);
+
+		$password = $data['password'];
+		$password = strip_tags($password);
+		$password = mysqli_real_escape_string($connection, $password);
+
+		$password_2 = $data['password_2'];
+		$password_2 = strip_tags($password_2);
+		$password_2 = mysqli_real_escape_string($connection, $password_2);
+		
+		$check_login = mysqli_query($connection,"SELECT * FROM `users` WHERE `login`='$login'");
+
+		if (isset($data['do_signup'])) {
+			$errors = array();
+			if (trim($data['login']) == '') {
+				$errors[] = 'Введите Логин!';
+			}
+			if (trim($data['email']) == '') {
+				$errors[] = 'Введите Email!';
+			}
+			if (trim($data['name']) == '') {
+				$errors[] = 'Введите Имя!';
+			}
+			if ($data['password'] == '') {
+				$errors[] = 'Введите Пароль!';
+			}
+			if ($data['password_2'] != $data['password']) {
+				$errors[] = 'Подтвердите Пароль!';
+			}
+			if (mysqli_num_rows($check_login) > 0) {
+				$errors[] = 'Пользователь с таким логином уже существует!';
+			}
+			if (empty($errors)) {
+				mysqli_query($connection, "INSERT INTO `users` (`login`,`email`,`name`,`password`) VALUES ('".$login."', '".$email."', '".$name."', '".password_hash($password, PASSWORD_DEFAULT)."')");
+				echo '<center><div id="reg_notifice" style="color: green ;">успешно</div><hr></center>';
+			}
+			else {
+				echo '<center><div id="reg_notifice" style="color: red;">'.array_shift($errors).'</div></center>';
+			}
 		}
 	}
 }

@@ -11,31 +11,7 @@ require "../system/source.php";
 	<title>forum</title>
 </head>
 <body>
-	<header>
-		<div class="header">
-			<div class="toggle-btn" onclick="openMenu()">
-				<span></span>
-				<span></span>
-				<span></span>
-			</div>
-			<h1 class="site-name"><a style="color: white" href="/">Forum</a></h1>
-			<button onclick="location='/'" class="nav-btn">Блог</button>
-			<button class="nav-btn" onclick="toggle('#vipad');">Категории</button>
-			<button class="nav-btn" onclick="location='../account'">Аккаунт</button>
-			<form class="search-box " name="search" method="post">
-				<input class="search-txt" type="search" name="search" placeholder="Type ro search">
-				<button name="submit" type="submit" class="search-btn btn btn-link">
-					<i class="fas fa-search"></i>
-				</button> 
-			</form>
-		</div>
-	</header>
-	<div id="sidebar">
-		<button onclick="location='/'" onclick="location='/'" class="sidebar-btn">Блог</button>
-		<button class="sidebar-btn" onclick="toggle('#vipad');">Категории</button>
-		<button class="sidebar-btn" onclick="location='../account'">Аккаунт</button>
-	</div>
-	<div style="padding-top: 50px;"></div>
+	<?php include"../view/forum-header.php";?>
 	<div id="vipad">
 		<div id="genre-bar">
 			<button onclick="location=''" id="genre">Еда</button>
@@ -47,7 +23,7 @@ require "../system/source.php";
 	<h1 style="text-align: center; padding-bottom: 10px; padding-top: 10px;">Форум</h1>
 	<?php $news = new News('forum');?>
 	<div style="text-align: center;">
-		<?php $pagination = new pagination('forum');?>
+	<?php $pagination = new pagination('forum');?>
 	</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="../js/main.js"></script>

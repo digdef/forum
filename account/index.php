@@ -1,3 +1,5 @@
+<?php require "../system/source.php"; ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,31 +11,33 @@
 </head>
 <body>
 	<header>
-		<div class="header">
-			<div class="toggle-btn" onclick="openMenu()">
-				<span></span>
-				<span></span>
-				<span></span>
-			</div>
-			<h1 class="site-name"><a style="color: white" href="/">Forum</a></h1>
-			<button onclick="location='/'" class="nav-btn">Блог</button>
-			<button onclick="location='../forum'" class="nav-btn">Форум</button>
-			<button class="nav-btn">Выйти</button>
-			<form class="search-box " name="search" method="post">
-				<input class="search-txt" type="search" name="search" placeholder="Type ro search">
-				<button name="submit" type="submit" class="search-btn btn btn-link">
-					<i class="fas fa-search"></i>
-				</button> 
-			</form>
-		</div>
+			<h1 style="text-align: center; padding: 0; margin: 0;" class="site-name"><a style="color: white" href="/">Forum</a></h1>
 	</header>
-	<div id="sidebar">
-		<button onclick="location='/'" class="sidebar-btn">Блог</button>
-		<button onclick="location='../forum'" class="sidebar-btn">Форум</button>
-		<button class="sidebar-btn">Выйти</button>
-	</div>
 	<div style="padding-top: 50px;"></div>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="../js/main.js"></script>
+	<center>
+		<div>
+			<form action="index.php" method="POST"> 
+				<h1>Вход</h1>
+				<input class="box-login" required="" type="text" name="login" placeholder="Логин"><br>
+				<input class="box-login" required="" type="password" name="password" placeholder="Пароль">
+				<div>
+					Запомнить <input name='remember' type='checkbox' value='1'>
+				</div>
+				<input class="button-login" type="submit" name="do_login" value="Вход">
+			</form>
+			<a id="link1" href="verification.php">Забыл пароль!</a>
+		
+			<form class="log-box" action="index.php" method="POST">
+				<h1>Регистрация</h1>
+				<input class="box-login" required="Введите Логин" type="text" name="login" placeholder="Ваш Логин" value="<? echo @$data['login'] ?>">
+				<input class="box-login" required="Введите Имя" type="text" name="name" placeholder="Ваше Имя" value="<? echo @$data['name'] ?>">
+				<input class="box-login" required="Введите Email" type="email" name="email" placeholder="Ваш Email" value="<? echo @$data['email'] ?>">  
+				<input class="box-login" minlength="7" required="Введите Пароль" type="password" name="password" placeholder="Пароль" value="<? echo @$data['password'] ?>">
+				<input class="box-login" minlength="7" required="Подтвердите Пароль" type="password" name="password_2" placeholder="Подтвердите Пароль" value="<? echo @$data['password_2'] ?>">
+				<input class="button-login" type="submit" name="do_signup" value="Регистрация">
+			</form>
+		</div>		
+	</center>
+
 </body>
 </html>
