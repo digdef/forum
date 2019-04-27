@@ -222,7 +222,11 @@ class account {
 				} else {
 					$errors[] = 'Такого пользователя не существует!';
 				}
+
 			}
+		}
+		if (!empty($errors)) {
+			echo '<center><div id="reg_notifice" style="color: red;">'.array_shift($errors).'</div></center>';
 		}
 
 		if (empty($_SESSION['auth']) or $_SESSION['auth'] == false) {
@@ -246,7 +250,8 @@ class account {
 	public function create_account() {
 
 		include "config.php";
-
+		
+		$data =$_POST;
 		$login = $data['login'];
 		$login = strip_tags($login);
 		$login = mysqli_real_escape_string($connection, $login);
@@ -266,7 +271,7 @@ class account {
 		$password_2 = $data['password_2'];
 		$password_2 = strip_tags($password_2);
 		$password_2 = mysqli_real_escape_string($connection, $password_2);
-		
+
 		$check_login = mysqli_query($connection,"SELECT * FROM `users` WHERE `login`='$login'");
 
 		if (isset($data['do_signup'])) {

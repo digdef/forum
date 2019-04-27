@@ -1,5 +1,8 @@
-<?php require "../system/source.php"; ?>
-
+<?php require "../system/source.php"; 
+$account = new account();
+$account->sign_in();
+$account->create_account()
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,11 +16,11 @@
 	<header>
 			<h1 style="text-align: center; padding: 0; margin: 0;" class="site-name"><a style="color: white" href="/">Forum</a></h1>
 	</header>
-	<div style="padding-top: 50px;"></div>
+	<div style="padding-top: 50px;"></div>	
 	<center>
 		<div>
 			<form action="index.php" method="POST"> 
-				<h1>Вход</h1>
+				<h1>Вход</h1>			
 				<input class="box-login" required="" type="text" name="login" placeholder="Логин"><br>
 				<input class="box-login" required="" type="password" name="password" placeholder="Пароль">
 				<div>
@@ -26,9 +29,12 @@
 				<input class="button-login" type="submit" name="do_login" value="Вход">
 			</form>
 			<a id="link1" href="verification.php">Забыл пароль!</a>
-		
+	
 			<form class="log-box" action="index.php" method="POST">
 				<h1>Регистрация</h1>
+				<?php
+					$account->create_account();
+				?>	
 				<input class="box-login" required="Введите Логин" type="text" name="login" placeholder="Ваш Логин" value="<? echo @$data['login'] ?>">
 				<input class="box-login" required="Введите Имя" type="text" name="name" placeholder="Ваше Имя" value="<? echo @$data['name'] ?>">
 				<input class="box-login" required="Введите Email" type="email" name="email" placeholder="Ваш Email" value="<? echo @$data['email'] ?>">  
