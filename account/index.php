@@ -1,7 +1,9 @@
-<?php require "../system/source.php"; 
+<?php
+session_start();
+require "../system/source.php";
+$check= new login_check();
 $account = new account();
 $account->sign_in();
-$account->create_account()
 ?>
 <!DOCTYPE html>
 <html>
@@ -16,7 +18,10 @@ $account->create_account()
 	<header>
 			<h1 style="text-align: center; padding: 0; margin: 0;" class="site-name"><a style="color: white" href="/">Forum</a></h1>
 	</header>
-	<div style="padding-top: 50px;"></div>	
+	<div style="padding-top: 50px;"></div>
+	<?
+	echo $error;
+	?>
 	<center>
 		<div>
 			<form action="index.php" method="POST"> 

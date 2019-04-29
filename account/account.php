@@ -1,4 +1,10 @@
-<?php require "../system/source.php"; ?>
+<?php 
+require "../system/source.php";
+session_start();
+if (empty($_SESSION['auth']) or $_SESSION['auth'] == false) {
+	header("location: index.php");
+} else {
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,3 +44,6 @@
 	<script src="../js/main.js"></script>
 </body>
 </html>
+<?
+}
+?>

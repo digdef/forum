@@ -150,7 +150,7 @@ class comment {
 				$text = strip_tags($text);
 				$text = mysqli_real_escape_string($connection, $text);
 				mysqli_query($connection, "INSERT INTO `comment` (`text`,`nick`,`avatar`,`news_id`) VALUES ('".$text."', '".$user_data['name']."', '".$user_data['avatar']."', '".$art['id']."') ");
-				echo '<div id="reg_notifice" style="color: green; ">Успешно</div>';
+				echo '<center><div id="reg_notifice" style="color: green; ">Успешно</div></center>';
 			} else {
 				echo '<center><span style="color: red;font-weight: bold; padding-bottom:30px;">'.$errors['0'].'</span></center>';
 			}
@@ -173,17 +173,17 @@ class categories {
 
 class account {
 
-	public function generateSalt() {
-
-		$salt = '';
-		$saltLength = 8;
-		for($i=0; $i<$saltLength; $i++) {
-			$salt .= chr(mt_rand(33,126));
-		}
-		return $salt;
-	}
-
 	public function sign_in() {
+
+		function generateSalt() {
+
+			$salt = '';
+			$saltLength = 8;
+			for($i=0; $i<$saltLength; $i++) {
+				$salt .= chr(mt_rand(33,126));
+			}
+			return $salt;
+		}
 
 		include "config.php";
 		$data =$_POST;
@@ -226,25 +226,10 @@ class account {
 			}
 		}
 		if (!empty($errors)) {
-			echo '<center><div id="reg_notifice" style="color: red;">'.array_shift($errors).'</div></center>';
+			$GLOBALS['error'] = '<center><div id="reg_notifice" style="color: red;">'.array_shift($errors).'</div></center>';
 		}
 
-		if (empty($_SESSION['auth']) or $_SESSION['auth'] == false) {
-			if ( !empty($_COOKIE['login']) and !empty($_COOKIE['key']) ) {
-				$login = $_COOKIE['login']; 
-				$key = $_COOKIE['key'];
-				$query = 'SELECT*FROM users WHERE login="'.$login.'" AND cookie="'.$key.'"';
-				$result = mysqli_fetch_assoc(mysqli_query($connection, $query)); 
-				if (!empty($result)) {
-					session_start(); 
-					$_SESSION['auth'] = true; 
-					$_SESSION['id'] = $user['id']; 
-					$_SESSION['login'] = $user['login']; 
-				}
-			}
-		} else {
-			header("location: account.php");
-		}
+
 	}
 
 	public function create_account() {
@@ -301,6 +286,99 @@ class account {
 			else {
 				echo '<center><div id="reg_notifice" style="color: red;">'.array_shift($errors).'</div></center>';
 			}
+		}
+	}
+}
+
+class login_check {
+
+	public function __construct() {
+
+		if (empty($_SESSION['auth']) or $_SESSION['auth'] == false) {
+			if ( !empty($_COOKIE['login']) and !empty($_COOKIE['key']) ) {
+				$login = $_COOKIE['login']; 
+				$key = $_COOKIE['key'];
+				$query = 'SELECT*FROM users WHERE login="'.$login.'" AND cookie="'.$key.'"';
+				$result = mysqli_fetch_assoc(mysqli_query($connection, $query)); 
+				if (!empty($result)) {
+					session_start(); 
+					$_SESSION['auth'] = true; 
+					$_SESSION['id'] = $user['id']; 
+					$_SESSION['login'] = $user['login']; 
+				}
+			}
+		} else {
+			header("location: account.php");
+		}		
+	}
+}
+
+class search {
+
+	public function __construct() {
+
+		include "config.php";
+
+		if (isset($_POST['submit'])) {
+			$reply = '';
+			$search = $_POST['search'];
+			$search = trim($search);
+			$search = strip_tags($search);
+			$search = mysqli_real_escape_string($connection, $search);
+			echo'<center><h2>Поиск по Блогу:</h2></center><br>';
+			if(!empty($search)){
+				$result = mysqli_query($connection, "SELECT * FROM news WHERE title LIKE '%$search%' ");
+				$num = mysqli_num_rows($result);
+				if($num > 0){
+					$row = mysqli_fetch_assoc($result);  
+					do{
+						$reply .='<article class="news"><div class="preview"><a style="padding-right: 20px;" href="">';
+						$reply .='<img class="img" src="img/'. $row['img'].'"></a>';
+						$reply .='<div><h2>'. $row['title'].'</h2>';
+						$reply .=$row['text'];
+						$reply .='<br><button onclick="location=`news.php?id='.$row['id'].'`" class="news-link">Подробнее</button>';
+						$reply .='</div></div></article>';
+					}
+					while($row = mysqli_fetch_assoc($result));
+				} else{
+					$reply = '<center><h2>По вашему запросу ничего не найдено.</h2></center><br>';
+				}
+			}
+			else{
+				$reply = '<center><h2>Задан пустой поисковый запрос.</h2></center><br>';
+			}
+			echo $reply;
+		}
+
+
+		if (isset($_POST['submit'])) {
+			$reply = '';
+			$search = $_POST['search'];
+			$search = trim($search);
+			$search = strip_tags($search);
+			$search = mysqli_real_escape_string($connection, $search);
+			echo'<center><h2>Поиск по Форуму:</h2></center><br>';
+			if(!empty($search)){
+				$result = mysqli_query($connection, "SELECT * FROM forum WHERE title LIKE '%$search%' ");
+				$num = mysqli_num_rows($result);
+				if($num > 0){
+					$row = mysqli_fetch_assoc($result);  
+					do{
+						$reply .='<article class="news"><div class="preview">';
+						$reply .='<div><h2>'. $row['title'].'</h2>';
+						$reply .=$row['text'];
+						$reply .='<br><button onclick="location=`news.php?id='.$row['id'].'`" class="news-link">Подробнее</button>';
+						$reply .='</div></div></article>';
+					}
+					while($row = mysqli_fetch_assoc($result));
+				} else{
+					$reply = '<center><h2>По вашему запросу ничего не найдено.</h2></center>';
+				}
+			}
+			else{
+				$reply = '<center><h2>Задан пустой поисковый запрос.</h2></center>';
+			}
+			echo $reply;
 		}
 	}
 }

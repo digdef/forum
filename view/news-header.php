@@ -9,7 +9,7 @@
 		<button onclick="location='forum'" class="nav-btn">Форум</button>
 		<button class="nav-btn" onclick="toggle('#vipad');">Категории</button>
 		<button class="nav-btn" onclick="location='account'">Аккаунт</button>
-		<form class="search-box " name="search" method="post">
+		<form class="search-box " name="search" method="post" action="search.php">
 			<input class="search-txt" type="search" name="search" placeholder="Type ro search">
 			<button name="submit" type="submit" class="search-btn btn btn-link">
 				<i class="fas fa-search"></i>
@@ -27,4 +27,5 @@
 		</div>
 	</div>
 </header>
+
 <div style="padding-top: 50px;"></div>

@@ -1,4 +1,5 @@
 <?php
+session_start();
 require "system/source.php";
 include "system/config.php";
 ?>
