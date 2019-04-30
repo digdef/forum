@@ -25,7 +25,7 @@ $account->sign_in();
 	<center>
 		<div>
 			<form action="index.php" method="POST"> 
-				<h1>Вход</h1>			
+				<h1>Вход</h1>
 				<input class="box-login" required="" type="text" name="login" placeholder="Логин"><br>
 				<input class="box-login" required="" type="password" name="password" placeholder="Пароль">
 				<div>
@@ -33,7 +33,7 @@ $account->sign_in();
 				</div>
 				<input class="button-login" type="submit" name="do_login" value="Вход">
 			</form>
-			<a id="link1" href="verification.php">Забыл пароль!</a>
+			<a id="link1" href="recovery.php">Забыл пароль!</a>
 	
 			<form class="log-box" action="index.php" method="POST">
 				<h1>Регистрация</h1>

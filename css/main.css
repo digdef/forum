@@ -165,6 +165,12 @@ a {
 	padding: 14px 10px;
 	outline: none;
 	border-radius: 24px;
+	transition: 0.25s;
+}
+
+.button-login:hover {
+	color: white;
+	background-color: #46B2F0;
 }
 
 .log-box {

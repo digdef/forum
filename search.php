@@ -12,11 +12,8 @@ require "system/source.php";?>
 <body>
 	<?
 	include"view/news-header.php";
+	$search = new search('news');
 	?>
-		<div style="padding-top: 50px;"></div>
-<?
-$search = new search();
-?>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="js/main.js"></script>
 </body>

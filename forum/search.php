@@ -12,12 +12,10 @@ require "../system/source.php";
 </head>
 <body>
 	<?php include"../view/forum-header.php";?>
-	<h1 style="text-align: center; padding-bottom: 10px; padding-top: 10px;">Форум</h1>
-	<?php $news = new News('forum');?>
-	<div style="text-align: center;">
-	<?php $pagination = new pagination('forum');?>
-	</div>
+	<div style="padding-top: 20px;"></div>
+	<?
+	$search = new search('forum');
+	?>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="../js/main.js"></script>
-</body>
 </html>

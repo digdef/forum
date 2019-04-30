@@ -313,9 +313,82 @@ class login_check {
 	}
 }
 
-class search {
+class recovery {
 
 	public function __construct() {
+
+		include "config.php";
+
+		function generateSalt() {
+			$salt = '';
+			$saltLength = 8;
+			for($i=0; $i<$saltLength; $i++) {
+				$salt .= chr(mt_rand(33,126));
+			}
+			return $salt;
+		}
+
+		$mail = $_POST['email'];
+		$user = mysqli_query($connection,"SELECT * FROM `users` WHERE `email`='".$mail."'");
+		if (isset($_POST['recovery'])) {
+			$errors = array();
+			if (trim($_POST['email']) == '') {
+				$errors[] = 'Введите Email!';
+			}
+			if (mysqli_num_rows($user) == 0) {
+				$errors[] = 'Такого Email нет';
+			}
+			if (empty($errors)) {	
+				mail("admin@forum.com", "Запрос на восстановление пароля", "Hello. ссылка на восстановление http://forum/account/password_recovery.php");
+				session_start();
+				$_SESSION['email'] = $mail;
+			} else {
+				echo '<center><span style="color: red;font-weight: bold; padding-bottom:30px;">'.$errors['0'].'</span></center>';
+			}
+		}
+	}
+}
+
+class password_recovery {
+
+	public function __construct() {
+		
+		include "config.php";
+
+		function generateSalt() {
+			$salt = '';
+			$saltLength = 8;
+			for($i=0; $i<$saltLength; $i++) {
+				$salt .= chr(mt_rand(33,126));
+			}
+			return $salt;
+		}
+
+		$id=$_SESSION['email'];
+		$mail = $_SESSION['email'];
+		$user = mysqli_query($connection,"SELECT * FROM `users` WHERE `email`='".$mail."'");
+		$users = mysqli_fetch_array($user);
+		if (isset($_POST['update_password'])) {
+			$errors = array();
+			if ($_POST['password'] == '') {
+				$errors[] = 'Введите Пароль!';
+			}
+			if ($_POST['password_2'] != $_POST['password']) {
+				$errors[] = 'Подтвердите Пароль!';
+			}
+			if (empty($errors)) {
+				mysqli_query($connection, "UPDATE `users` SET `password` = '".password_hash($_POST['password'], PASSWORD_DEFAULT)."' WHERE `users`.`email` ='$mail' ");
+				echo '<center><div id="reg_notifice" style="color: green ;">Успешно</div><hr></center>';
+			} else {
+				echo '<center><span style="color: red;font-weight: bold; padding-bottom:30px;">'.$errors['0'].'</span></center>';
+			}
+		}
+	}
+}
+
+class search {
+
+	public function __construct($table) {
 
 		include "config.php";
 
@@ -325,58 +398,46 @@ class search {
 			$search = trim($search);
 			$search = strip_tags($search);
 			$search = mysqli_real_escape_string($connection, $search);
-			echo'<center><h2>Поиск по Блогу:</h2></center><br>';
+			
 			if(!empty($search)){
-				$result = mysqli_query($connection, "SELECT * FROM news WHERE title LIKE '%$search%' ");
+				$result = mysqli_query($connection, "SELECT * FROM $table WHERE title LIKE '%$search%' ");
 				$num = mysqli_num_rows($result);
-				if($num > 0){
-					$row = mysqli_fetch_assoc($result);  
-					do{
-						$reply .='<article class="news"><div class="preview"><a style="padding-right: 20px;" href="">';
-						$reply .='<img class="img" src="img/'. $row['img'].'"></a>';
-						$reply .='<div><h2>'. $row['title'].'</h2>';
-						$reply .=$row['text'];
-						$reply .='<br><button onclick="location=`news.php?id='.$row['id'].'`" class="news-link">Подробнее</button>';
-						$reply .='</div></div></article>';
+				if ($table == 'news') {
+					if($num > 0){
+						$row = mysqli_fetch_assoc($result);  
+						do{
+							$reply .='<center><h2>Поиск по Блогу:</h2></center><br>';
+							$reply .='<article class="news"><div class="preview"><a style="padding-right: 20px;" href="">';
+							$reply .='<img class="img" src="img/'. $row['img'].'"></a>';
+							$reply .='<div><h2>'. $row['title'].'</h2>';
+							$reply .=$row['text'];
+							$reply .='<br><button onclick="location=`news.php?id='.$row['id'].'`" class="news-link">Подробнее</button>';
+							$reply .='</div></div></article>';
+						}
+						while($row = mysqli_fetch_assoc($result));
+					} else{
+						$reply = '<center><h2>По вашему запросу ничего не найдено.</h2></center><br>';
 					}
-					while($row = mysqli_fetch_assoc($result));
-				} else{
-					$reply = '<center><h2>По вашему запросу ничего не найдено.</h2></center><br>';
+				}
+				if ($table == 'forum') {
+					if($num > 0){
+						$row = mysqli_fetch_assoc($result);  
+						do{
+							$reply .='<center><h2>Поиск по Форуму:</h2></center><br>';
+							$reply .='<article class="news"><div class="preview">';
+							$reply .='<div><h2>'. $row['title'].'</h2>';
+							$reply .=$row['text'];
+							$reply .='<br><button onclick="location=`news.php?id='.$row['id'].'`" class="news-link">Подробнее</button>';
+							$reply .='</div></div></article>';
+						}
+						while($row = mysqli_fetch_assoc($result));
+					} else{
+						$reply = '<center><h2>По вашему запросу ничего не найдено.</h2></center><br>';
+					}
 				}
 			}
 			else{
 				$reply = '<center><h2>Задан пустой поисковый запрос.</h2></center><br>';
-			}
-			echo $reply;
-		}
-
-
-		if (isset($_POST['submit'])) {
-			$reply = '';
-			$search = $_POST['search'];
-			$search = trim($search);
-			$search = strip_tags($search);
-			$search = mysqli_real_escape_string($connection, $search);
-			echo'<center><h2>Поиск по Форуму:</h2></center><br>';
-			if(!empty($search)){
-				$result = mysqli_query($connection, "SELECT * FROM forum WHERE title LIKE '%$search%' ");
-				$num = mysqli_num_rows($result);
-				if($num > 0){
-					$row = mysqli_fetch_assoc($result);  
-					do{
-						$reply .='<article class="news"><div class="preview">';
-						$reply .='<div><h2>'. $row['title'].'</h2>';
-						$reply .=$row['text'];
-						$reply .='<br><button onclick="location=`news.php?id='.$row['id'].'`" class="news-link">Подробнее</button>';
-						$reply .='</div></div></article>';
-					}
-					while($row = mysqli_fetch_assoc($result));
-				} else{
-					$reply = '<center><h2>По вашему запросу ничего не найдено.</h2></center>';
-				}
-			}
-			else{
-				$reply = '<center><h2>Задан пустой поисковый запрос.</h2></center>';
 			}
 			echo $reply;
 		}
