@@ -1,4 +1,5 @@
 <?php
+session_start();
 require "../system/source.php";
 include "../system/config.php";
 ?>
@@ -12,7 +13,11 @@ include "../system/config.php";
 	<title>forum</title>
 </head>
 <body>
-	<?php include"../view/forum-header.php";?>
+	<?php include"../view/forum-header.php";
+	$discussion = new forum();
+	$article = mysqli_query($connection, "SELECT * FROM `forum` WHERE `id` = ".(int) $_GET['id']);
+	$art = mysqli_fetch_assoc($article);
+	?>
 	<h1 style="text-align: center; padding-bottom: 10px; padding-top: 10px;">lorems</h1>
 	<div class='news'>
 		<div class="preview">
@@ -27,100 +32,27 @@ include "../system/config.php";
 			</div>
 		</div>
 	</div>
-		<div class="box-comment">
-			<form action="film.php?id=<? echo $art['id'];?>" method="POST">
-				<input type="text" name="text" placeholder="Комментарий">
-				<button type="submit" name="add_comment"><i class="far fa-paper-plane"></i></button>
-			</form>
-		</div>
+	<div class="box-comment">
+		<form action="forum.php?id=<? echo $art['id'];?>" method="POST">
+			<input id="text" type="text" name="text" placeholder="Введите текст">
+			<button type="submit" name="add_comment"><i class="far fa-paper-plane"></i></button>
+		</form>
+	</div>
+	<?php 
+	$discussion->add_discussion();
+	?>
 	<div class="comment-group">
-		<div id="comment">
-			<div>
-				<div style="text-align: center;">
-					<span>123</span>
-				</div>
-				<img id="avatar_img" src="../img/avatar.png"></p>
-			</div>
-			<div id="comment1">
-				<span>
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-					quis nostrud exercitation ullamco<br>
-				</span>
-				<button class="news-link forum-link">Ответить</button>
-			</div>
-		</div>
-
-		<div style="padding-left: 50px;" id="comment">
-			<div>
-				<div style="text-align: center;">
-					<span>12qwe</span>
-				</div>
-				<img id="avatar_img" src="../img/avatar.png"></p>
-			</div>
-			<div id="comment1">
-				<span>
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-					quis nostrud exercitation ullamco<br>
-				</span>
-				<button class="news-link forum-link">Ответить</button>
-			</div>
-		</div>
-
-		<div style="padding-left: 100px;" id="comment">
-			<div>
-				<div style="text-align: center;">
-					<span>12qwe</span>
-				</div>
-				<img id="avatar_img" src="../img/avatar.png"></p>
-			</div>
-			<div id="comment1">
-				<span>
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-					quis nostrud exercitation ullamco<br>
-				</span>
-				<button class="news-link forum-link">Ответить</button>
-			</div>
-		</div>
-
-
-		<div style="padding-left: 150px;" id="comment">
-			<div>
-				<div style="text-align: center;">
-					<span>12qwe</span>
-				</div>
-				<img id="avatar_img" src="../img/avatar.png"></p>
-			</div>
-			<div id="comment1">
-				<span>
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-					quis nostrud exercitation ullamco<br>
-				</span>
-				<button class="news-link forum-link">Ответить</button>
-			</div>
-		</div>
-
-		<div id="comment">
-			<div>
-				<div style="text-align: center;">
-					<span>123</span>
-				</div>
-				<img id="avatar_img" src="../img/avatar.png"></p>
-			</div>
-			<div id="comment1">
-				<span>
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-					quis nostrud exercitation ullamco<br>
-				</span>
-				<button class="news-link forum-link">Ответить</button>
-			</div>
-		</div>
+		<?php $discussion->discussion();?>
 	</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="../js/main.js"></script>
+	<script>
+		function answer (name) {
+			var txt = name ;
+			var langg = document.getElementById ('text'); 
+			var nc = langg.selectionStart; 
+			langg.value = langg.value.substr (0, nc) + txt + langg.value.substr (nc);
+		}
+	</script>
 </body>
 </html>

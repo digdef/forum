@@ -29,7 +29,7 @@ include "system/config.php";
 		<?php 
 		$coment = new comment();
 		$coment->add_comment();
-		?>			
+		?>
 		<div class="comment-group">
 			<?php $coment->comments();?>
 		</div>	

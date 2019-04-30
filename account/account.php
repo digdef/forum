@@ -25,7 +25,7 @@ if (empty($_SESSION['auth']) or $_SESSION['auth'] == false) {
 			<h1 class="site-name"><a style="color: white" href="/">Forum</a></h1>
 			<button onclick="location='/'" class="nav-btn">Блог</button>
 			<button onclick="location='../forum'" class="nav-btn">Форум</button>
-			<button class="nav-btn">Выйти</button>
+			<button onclick="location='exit.php'" class="nav-btn">Выйти</button>
 			<form class="search-box " name="search" method="post">
 				<input class="search-txt" type="search" name="search" placeholder="Type ro search">
 				<button name="submit" type="submit" class="search-btn btn btn-link">

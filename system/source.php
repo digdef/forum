@@ -443,3 +443,63 @@ class search {
 		}
 	}
 }
+
+class forum {
+
+	public function add_discussion() {
+		
+		include "config.php";
+
+		$article = mysqli_query($connection, "SELECT * FROM `forum` WHERE `id` = ".(int) $_GET['id']);
+		$art = mysqli_fetch_assoc($article);
+		$name = $_SESSION['login'];
+		$res = mysqli_query($connection,"SELECT * FROM `users` WHERE `login`='$name' ");
+		$user_data = mysqli_fetch_array($res);
+
+		if (isset($_POST['add_comment'])) {
+			$errors = array();
+			if ($_POST['text'] == '') {
+				$errors[] = 'Пусто';
+			}
+			if ($user_data['name'] == '') {
+				$errors[] = 'Войдите';
+			}
+			if (empty($errors)) {
+				$text = $_POST['text'];
+				$text = strip_tags($text);
+				$text = mysqli_real_escape_string($connection, $text);
+				mysqli_query($connection, "INSERT INTO `discussion` (`text`,`nick`,`avatar`,`discussion_id`) VALUES ('".$text."', '".$user_data['name']."', '".$user_data['avatar']."', '".$art['id']."') ");
+				echo '<center><div id="reg_notifice" style="color: green; ">Успешно</div></center>';
+			} else {
+				echo '<center><span style="color: red;font-weight: bold; padding-bottom:30px;">'.$errors['0'].'</span></center>';
+			}
+		}
+	}
+
+	public function discussion() {
+
+		include "config.php";
+		
+		$article = mysqli_query($connection, "SELECT * FROM `forum` WHERE `id` = ".(int) $_GET['id']);
+		$art = mysqli_fetch_assoc($article);
+		$comments = mysqli_query($connection, "SELECT * FROM `discussion` WHERE `discussion_id` = '". (int) $art['id']."' ORDER BY `id` DESC");
+
+		if (mysqli_num_rows($comments) <= 0) {
+			echo'<div id="comment">';
+			echo'<div style="text-align: center; width: 100%" id="comment1">';
+			echo'<h3>Нет Обсуждений!</h3></div></div>';
+		}
+
+		while ($comment = mysqli_fetch_assoc($comments)) {
+			echo '<div id="comment"><div>';
+			echo '<div style="text-align: center;">';
+			echo '<span id="name">'.$comment['nick'].'</span></div>';
+			echo '<img id="avatar_img" src="../img/'.$comment['avatar'].'"></p></div>';
+			echo '<div id="comment1"><span>';
+			echo $comment['text'];
+			echo '<br></span>';
+			echo '<button class="news-link forum-link" onclick="answer(`'.$comment['nick'].', `)">Ответить</button>';
+			echo '</div></div>';
+		}
+	}
+}
