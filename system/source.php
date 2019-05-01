@@ -468,7 +468,12 @@ class forum {
 				$text = $_POST['text'];
 				$text = strip_tags($text);
 				$text = mysqli_real_escape_string($connection, $text);
-				mysqli_query($connection, "INSERT INTO `discussion` (`text`,`nick`,`avatar`,`discussion_id`) VALUES ('".$text."', '".$user_data['name']."', '".$user_data['avatar']."', '".$art['id']."') ");
+
+				$answer_nick = $_POST['answer_nick'];
+				$answer_nick = strip_tags($answer_nick);
+				$answer_nick = mysqli_real_escape_string($connection, $answer_nick);
+				$answer = '<a href="'.$answer_nick.'">'.$answer_nick.'</a>';
+				mysqli_query($connection, "INSERT INTO `discussion` (`text`,`nick`,`avatar`,`discussion_id`,`answer_nick`) VALUES ('".$text."', '".$user_data['name']."', '".$user_data['avatar']."', '".$art['id']."','".$answer."') ");
 				echo '<center><div id="reg_notifice" style="color: green; ">Успешно</div></center>';
 			} else {
 				echo '<center><span style="color: red;font-weight: bold; padding-bottom:30px;">'.$errors['0'].'</span></center>';
@@ -496,9 +501,10 @@ class forum {
 			echo '<span id="name">'.$comment['nick'].'</span></div>';
 			echo '<img id="avatar_img" src="../img/'.$comment['avatar'].'"></p></div>';
 			echo '<div id="comment1"><span>';
+			echo $comment['answer_nick'];
 			echo $comment['text'];
 			echo '<br></span>';
-			echo '<button class="news-link forum-link" onclick="answer(`'.$comment['nick'].', `)">Ответить</button>';
+			echo '<button class="news-link forum-link" onclick="answer(`'.$comment['nick'].'`)">Ответить</button>';
 			echo '</div></div>';
 		}
 	}

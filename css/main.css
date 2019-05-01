@@ -53,6 +53,11 @@ a {
 	text-align: center;
 }
 
+.container {
+	margin-right: 10.5%;
+	margin-left: 10.5%;	
+}
+
 .news {
 	border-color: #bdc3c7;
 	border-style: solid;

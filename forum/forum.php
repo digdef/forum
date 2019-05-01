@@ -32,8 +32,9 @@ include "../system/config.php";
 			</div>
 		</div>
 	</div>
-	<div class="box-comment">
+	<div class="box-comment container" >
 		<form action="forum.php?id=<? echo $art['id'];?>" method="POST">
+			<input style="display: none; width: 10%; float: left;" class="container" id="answer_nick" type="text" name="answer_nick" placeholder="Ответить Кому?">
 			<input id="text" type="text" name="text" placeholder="Введите текст">
 			<button type="submit" name="add_comment"><i class="far fa-paper-plane"></i></button>
 		</form>
@@ -49,9 +50,10 @@ include "../system/config.php";
 	<script>
 		function answer (name) {
 			var txt = name ;
-			var langg = document.getElementById ('text'); 
+			var langg = document.getElementById ('answer_nick'); 
 			var nc = langg.selectionStart; 
 			langg.value = langg.value.substr (0, nc) + txt + langg.value.substr (nc);
+			langg.style.display = (langg.style.display == 'none') ? '' : 'none';
 		}
 	</script>
 </body>
