@@ -294,6 +294,8 @@ class login_check {
 
 	public function __construct() {
 
+		include "config.php";
+		
 		if (empty($_SESSION['auth']) or $_SESSION['auth'] == false) {
 			if ( !empty($_COOKIE['login']) and !empty($_COOKIE['key']) ) {
 				$login = $_COOKIE['login']; 
@@ -506,6 +508,130 @@ class forum {
 			echo '<br></span>';
 			echo '<button class="news-link forum-link" onclick="answer(`'.$comment['nick'].'`)">Ответить</button>';
 			echo '</div></div>';
+		}
+	}
+}
+
+class update_name {
+
+	function __construct() {
+
+		include "config.php";
+
+		if (isset($_POST['update_name'])) {
+			$errors = array();
+			if ($data['name'] == '') {
+				$errors[] = 'Введите Имя!';
+			}
+			if (empty($errors)) {
+				mysqli_query($connection, "UPDATE `users` SET `name` = '".$_POST['name']."' WHERE `users`.`id` ='$id' ");
+				echo '<center><div id="reg_notifice" style="color: green ;">Успешно</div><hr></center>';
+			} else {
+				echo '<center><span style="color: red;font-weight: bold; padding-bottom:30px;">'.$errors['0'].'</span></center>';
+			}
+		}
+	}
+}
+
+class update_email {
+
+	function __construct() {
+
+		include "config.php";
+
+		if (isset($_POST['update_email'])) {
+			$errors = array();
+			if ($data['email'] == '') {
+				$errors[] = 'Введите Email!';
+			}
+			if (empty($errors)) {
+				mysqli_query($connection, "UPDATE `users` SET `email` = '".$_POST['email']."' WHERE `users`.`id` ='$id' ");
+				echo '<center><div id="reg_notifice" style="color: green ;">Успешно</div><hr></center>';
+			} else {
+				echo '<center><span style="color: red;font-weight: bold; padding-bottom:30px;">'.$errors['0'].'</span></center>';
+			}
+		}
+	}
+}
+
+class update_password {
+
+	function __construct() {
+
+		include "config.php";
+
+		if (isset($_POST['update_password'])) {
+			$errors = array();
+			if ($data['password'] == '') {
+				$errors[] = 'Введите Пароль!';
+			}
+			if ($data['password_2'] != $data['password']) {
+				$errors[] = 'Подтвердите Пароль!';
+			}
+			if (empty($errors)) {
+				mysqli_query($connection, "UPDATE `users` SET `password` = '".password_hash($data['password'], PASSWORD_DEFAULT)."' WHERE `users`.`id` ='$id' ");
+				echo '<center><div id="reg_notifice" style="color: green ;">Успешно</div><hr></center>';
+			} else {
+				echo '<center><span style="color: red;font-weight: bold; padding-bottom:30px;">'.$errors['0'].'</span></center>';
+			}
+		}
+	}
+}
+
+class add_news {
+
+	function __construct() {
+
+		include "config.php";	
+
+		if (isset($_POST['do_post'])) {
+			$errors = array();
+			if ($_POST['title'] == '') {
+				$errors[] = 'Введите Название!';
+			}
+			if ($_POST['img'] == '') {
+				$errors[] = 'Введите Имя Превью!';
+			}
+			if ($_POST['text'] == '') {
+				$errors[] = 'Введите Текст!';
+			}
+			
+			if (empty($errors)) {
+				echo '<span style="color: green;font-weight: bold;">Успех</span><br>';
+				mysqli_query($connection, "INSERT INTO `news` (`title`,`img`,`text`) VALUES ('".$_POST['title']."','".$_POST['img']."','".$_POST['text']."' )");
+			}
+			else{
+				echo '<span style="color: red;font-weight: bold;">'.$errors['0'].'</span>';
+			}
+		}	
+	}
+}
+
+class add_forum {
+
+	function __construct() {
+
+		include "config.php";
+
+		if (isset($_POST['do_post'])) {
+			$errors = array();
+			if ($_POST['title'] == '') {
+				$errors[] = 'Введите Название!';
+			}
+			if ($_POST['img'] == '') {
+				$errors[] = 'Введите Имя Превью!';
+			}
+			if ($_POST['text'] == '') {
+				$errors[] = 'Введите Текст!';
+			}
+			
+			if (empty($errors)) {
+				echo '<span style="color: green;font-weight: bold;">Успех</span><br>';
+				mysqli_query($connection, "INSERT INTO `news` (`title`,`text`) VALUES ('".$_POST['title']."','".$_POST['text']."' )");
+			}
+			else{
+				echo '<span style="color: red;font-weight: bold;">'.$errors['0'].'</span>';
+			}
 		}
 	}
 }
