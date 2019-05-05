@@ -23,7 +23,7 @@
 	</div>
 	<div id="vipad">
 		<div id="genre-bar">
-			<?php $categories = new categories();?>
+			<?php $categories = new categories('categories');?>
 		</div>
 	</div>
 </header>

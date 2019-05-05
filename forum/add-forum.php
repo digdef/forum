@@ -16,18 +16,42 @@ if (empty($_SESSION['auth']) or $_SESSION['auth'] == false) {
 	<title>forum</title>
 </head>
 <body>
-	<?php 
-	include"../view/forum-header.php";
-	$add_forum = new add_forum();
-	?>
-	<form method="POST" action="add-news.php">
 
-		<label for="text">Название</label><br>
-		<input type="text" placeholder="Введите Название" name="title" id="title"><br>
-		<label for="text">Текст</label><br>
+	<header>
+		<div class="header">
+			<div class="toggle-btn" onclick="openMenu()">
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+			<h1 class="site-name"><a style="color: white" href="/">Forum</a></h1>
+			<button onclick="location='/'" class="nav-btn">Блог</button>
+			<button onclick="location='../forum'" class="nav-btn">Форум</button>
+			<button class="nav-btn" onclick="location='../account'">Аккаунт</button>
+			<form class="search-box " name="search" method="post">
+				<input class="search-txt" type="search" name="search" placeholder="Type ro search">
+				<button name="submit" type="submit" class="search-btn btn btn-link">
+					<i class="fas fa-search"></i>
+				</button> 
+			</form>
+		</div>
+	</header>
+	<div id="sidebar">
+		<button onclick="location='/'" class="sidebar-btn">Блог</button>
+		<button onclick="location='../forum'" class="sidebar-btn">Форум</button>
+		<button class="sidebar-btn" onclick="location='../account'">Аккаунт</button>
+	</div>
+	<div style="padding-top: 50px;"></div>
+	<form style="text-align: center;" method="POST" action="add-forum.php">
+		<?php $add_forum = new add_forum();?><br>
+		<label style="font-size: 25px;" for="text">Название</label><br>
+		<input class="box-login" type="text" placeholder="Введите Название" name="title" id="title"><br>
+		<label style="font-size: 25px;">Категория</label><br>
+		<?php $add_categories = new add_categories('categories_forum');?><br>
+		<label style="font-size: 25px;" for="text">Текст</label><br>
 
 		<textarea name="text" id="text"></textarea>
-		<input type="submit" name="do_post" value="Отправить">
+		<input class="button-login" type="submit" name="do_post" value="Отправить">
 	</form>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
