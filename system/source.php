@@ -26,7 +26,7 @@ class News {
 			while ($art = mysqli_fetch_assoc($articles)) {
 				echo'<article class="news"><div class="preview"><a style="padding-right: 20px;" href="">';
 				echo'<img class="img" src="'. $art['img'].'"></a>';
-				echo'<div><h2>'. $art['title'].'</h2>';
+				echo'<div style="width: 100%"><h2>'. $art['title'].'</h2>';
 				echo mb_substr(strip_tags($art['text']), 0, 500, 'utf-8');
 				echo'<br><button onclick="location=`news.php?id='.$art['id'].'`" class="news-link">Подробнее</button>';
 				echo'</div></div></article>';
@@ -36,7 +36,7 @@ class News {
 		if ($table == 'forum') {
 			while ($art = mysqli_fetch_assoc($articles)) {
 				echo'<article class="news"><div class="preview">';
-				echo'<div><h2>'. $art['title'].'</h2>';
+				echo'<div style="width: 100%"><h2>'. $art['title'].'</h2>';
 				echo mb_substr(strip_tags($art['text']), 0, 500, 'utf-8');
 				echo'<br><button onclick="location=`forum.php?id='.$art['id'].'`" class="news-link">Подробнее</button>';
 				echo'</div></div></article>';
@@ -412,8 +412,8 @@ class search {
 							$reply .='<center><h2>Поиск по Блогу:</h2></center><br>';
 							$reply .='<article class="news"><div class="preview"><a style="padding-right: 20px;" href="">';
 							$reply .='<img class="img" src="'. $row['img'].'"></a>';
-							$reply .='<div><h2>'. $row['title'].'</h2>';
-							$reply .=mb_substr(strip_tags($art['text']), 0, 500, 'utf-8');
+							$reply .='<div style="width: 100%"><h2>'. $row['title'].'</h2>';
+							$reply .=mb_substr(strip_tags($row['text']), 0, 500, 'utf-8');
 							$reply .='<br><button onclick="location=`news.php?id='.$row['id'].'`" class="news-link">Подробнее</button>';
 							$reply .='</div></div></article>';
 						}
@@ -428,8 +428,8 @@ class search {
 						do{
 							$reply .='<center><h2>Поиск по Форуму:</h2></center><br>';
 							$reply .='<article class="news"><div class="preview">';
-							$reply .='<div><h2>'. $row['title'].'</h2>';
-							$reply .=mb_substr(strip_tags($art['text']), 0, 500, 'utf-8');
+							$reply .='<div style="width: 100%"><h2>'. $row['title'].'</h2>';
+							$reply .=mb_substr(strip_tags($row['text']), 0, 500, 'utf-8');
 							$reply .='<br><button onclick="location=`forum.php?id='.$row['id'].'`" class="news-link">Подробнее</button>';
 							$reply .='</div></div></article>';
 						}
@@ -686,7 +686,7 @@ class page_categories {
 					$art = mysqli_fetch_assoc($news);
 					echo'<article class="news"><div class="preview"><a style="padding-right: 20px;" href="">';
 					echo'<img class="img" src="'. $art['img'].'"></a>';
-					echo'<div><h2>'. $art['title'].'</h2>';
+					echo'<div style="width: 100%"><h2>'. $art['title'].'</h2>';
 					echo mb_substr(strip_tags($art['text']), 0, 500, 'utf-8');
 					echo'<br><button onclick="location=`news.php?id='.$art['id'].'`" class="news-link">Подробнее</button>';
 					echo'</div></div></article>';
@@ -699,7 +699,7 @@ class page_categories {
 					$news = mysqli_query($connection, "SELECT * FROM $table WHERE `title`='$sub1' ORDER BY `id` DESC");
 					$art = mysqli_fetch_assoc($news);
 					echo'<article class="news"><div class="preview">';
-					echo'<div><h2>'. $art['title'].'</h2>';
+					echo'<div style="width: 100%"><h2>'. $art['title'].'</h2>';
 					echo mb_substr(strip_tags($art['text']), 0, 500, 'utf-8');
 					echo'<br><button onclick="location=`forum.php?id='.$art['id'].'`" class="news-link">Подробнее</button>';
 					echo'</div></div></article>';
