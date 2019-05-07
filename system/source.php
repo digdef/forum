@@ -475,7 +475,7 @@ class forum {
 				$answer_nick = $_POST['answer_nick'];
 				$answer_nick = strip_tags($answer_nick);
 				$answer_nick = mysqli_real_escape_string($connection, $answer_nick);
-				$answer = '<a href="'.$answer_nick.'">'.$answer_nick.', </a>';
+				$answer = '<a href="../account/user.php?='.$answer_nick.'">'.$answer_nick.', </a>';
 				mysqli_query($connection, "INSERT INTO `discussion` (`text`,`nick`,`avatar`,`discussion_id`,`answer_nick`) VALUES ('".$text."', '".$user_data['name']."', '".$user_data['avatar']."', '".$art['id']."','".$answer."') ");
 				echo '<center><div id="reg_notifice" style="color: green; ">Успешно</div></center>';
 			} else {
@@ -519,14 +519,20 @@ class update_name {
 
 		include "config.php";
 
-		if (isset($_POST['update_name'])) {
+		$name=$_SESSION['login'];
+		$id=$_SESSION['id'];
+		$res=mysqli_query($connection,"SELECT * FROM `users` WHERE `login`='$name' ");
+		$user_data=mysqli_fetch_array($res);
+		$data=$_POST;
+
+		if (isset($data['update_name'])) {
 			$errors = array();
 			if ($data['name'] == '') {
 				$errors[] = 'Введите Имя!';
 			}
 			if (empty($errors)) {
-				mysqli_query($connection, "UPDATE `users` SET `name` = '".$_POST['name']."' WHERE `users`.`id` ='$id' ");
-				echo '<center><div id="reg_notifice" style="color: green ;">Успешно</div><hr></center>';
+				mysqli_query($connection, "UPDATE `users` SET `name` = '".$data['name']."' WHERE `users`.`id` ='$id' ");
+				echo '<center><span style="color: green ;">Успешно</span></center>';
 			} else {
 				echo '<center><span style="color: red;font-weight: bold; padding-bottom:30px;">'.$errors['0'].'</span></center>';
 			}
@@ -540,14 +546,20 @@ class update_email {
 
 		include "config.php";
 
-		if (isset($_POST['update_email'])) {
+		$name=$_SESSION['login'];
+		$id=$_SESSION['id'];
+		$res=mysqli_query($connection,"SELECT * FROM `users` WHERE `login`='$name' ");
+		$user_data=mysqli_fetch_array($res);
+		$data=$_POST;
+	
+		if (isset($data['update_email'])) {
 			$errors = array();
 			if ($data['email'] == '') {
 				$errors[] = 'Введите Email!';
 			}
 			if (empty($errors)) {
-				mysqli_query($connection, "UPDATE `users` SET `email` = '".$_POST['email']."' WHERE `users`.`id` ='$id' ");
-				echo '<center><div id="reg_notifice" style="color: green ;">Успешно</div><hr></center>';
+				mysqli_query($connection, "UPDATE `users` SET `email` = '".$data['email']."' WHERE `users`.`id` ='$id' ");
+				echo '<center><span style="color: green ;">Успешно</span></center>';
 			} else {
 				echo '<center><span style="color: red;font-weight: bold; padding-bottom:30px;">'.$errors['0'].'</span></center>';
 			}
@@ -561,7 +573,13 @@ class update_password {
 
 		include "config.php";
 
-		if (isset($_POST['update_password'])) {
+		$name=$_SESSION['login'];
+		$id=$_SESSION['id'];
+		$res=mysqli_query($connection,"SELECT * FROM `users` WHERE `login`='$name' ");
+		$user_data=mysqli_fetch_array($res);
+		$data=$_POST;
+	
+		if (isset($data['update_password'])) {
 			$errors = array();
 			if ($data['password'] == '') {
 				$errors[] = 'Введите Пароль!';
@@ -571,7 +589,7 @@ class update_password {
 			}
 			if (empty($errors)) {
 				mysqli_query($connection, "UPDATE `users` SET `password` = '".password_hash($data['password'], PASSWORD_DEFAULT)."' WHERE `users`.`id` ='$id' ");
-				echo '<center><div id="reg_notifice" style="color: green ;">Успешно</div><hr></center>';
+				echo '<center><span style="color: green ;">Успешно</span></center>';
 			} else {
 				echo '<center><span style="color: red;font-weight: bold; padding-bottom:30px;">'.$errors['0'].'</span></center>';
 			}

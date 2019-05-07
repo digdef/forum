@@ -58,7 +58,7 @@ if (empty($_SESSION['auth']) or $_SESSION['auth'] == false) {
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="js/main.js"></script>
-	<script type="text/javascript" src="editor/ckeditor.js"></script>
+	<script type="text/javascript" src="lib/editor/ckeditor.js"></script>
 </body>
 <script>
 	CKEDITOR.replace( 'text' );

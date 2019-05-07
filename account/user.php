@@ -1,14 +1,6 @@
 <?php 
 require "../system/source.php";
 require "../system/config.php";
-session_start();
-if (empty($_SESSION['auth']) or $_SESSION['auth'] == false) {
-	header("location: index.php");
-} else {
-	$name=$_SESSION['login'];
-	$id=$_SESSION['id'];
-	$res=mysqli_query($connection,"SELECT * FROM `users` WHERE `login`='$name' ");
-	$user_data=mysqli_fetch_array($res);
 ?>
 <!DOCTYPE html>
 <html>
@@ -45,7 +37,10 @@ if (empty($_SESSION['auth']) or $_SESSION['auth'] == false) {
 		<button class="sidebar-btn">Выйти</button>
 	</div>
 	<div style="padding-top: 50px;"></div>
-
+	<?php
+	$users = mysqli_query($connection, "SELECT * FROM `users` WHERE `id` = ".(int) $_GET['id']);
+	$user = mysqli_fetch_assoc($users);
+	?>
 	<div id="main">
 		<article style="display: inline-block;">
 			<div class="avatar" style="text-align: center;">
@@ -53,35 +48,15 @@ if (empty($_SESSION['auth']) or $_SESSION['auth'] == false) {
 				<button onclick="location='../forum/add-forum.php'" class="button-login" style="width: 250px;">Добавить Обсуждение</button><br>
 				<button onclick="location='../add-news.php'" class="button-login" style="width: 250px;">Добавить Новость</button>
 			</div>
-
 			<div class="text">
 				<center>
 					<span id="name">
 						<?
-						echo $user_data['name']."<br>";
-						echo "Почта: ". $user_data['email']."<br>";
+						echo $user['name']."<br>";
+						echo "Почта: ". $user['email']."<br>";
 						$data =$_POST;
 						?>
 					</span></p>
-					<form action="account.php" method="POST">
-						<h2>Настройки</h2>
-						<input class="box-login" type="text" name="name" placeholder="Изменить Имя" value="<? echo @$data['name'] ?>"><br>
-						<input class="button-login" type="submit" name="update_name" value="Изменить"><br>
-						<?
-							$update_name = new update_name();
-						?>
-						<input class="box-login" type="email" name="email" placeholder="Изменить Email" value="<? echo @$data['email'] ?>"><br>
-						<input class="button-login" id="btn" type="submit" name="update_email" value="Изменить"><br>
-						<?
-							$update_email = new update_email();
-						?>
-						<input class="box-login" minlength="7" type="password" name="password" placeholder="Изменить Пароль" value="<? echo @$data['password'] ?>">
-						<input class="box-login" minlength="7" type="password" name="password_2" placeholder="Подтвердите Пароль" value="<? echo @$data['password_2'] ?>"><br>
-						<input class="button-login" id="btn"  type="submit" name="update_password" value="Изменить">
-						<?
-							$update_password = new update_password();
-						?>
-					</form>
 				</center>
 			</div>
 		</article>
@@ -91,6 +66,3 @@ if (empty($_SESSION['auth']) or $_SESSION['auth'] == false) {
 	<script src="../js/main.js"></script>
 </body>
 </html>
-<?
-}
-?>
