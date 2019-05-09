@@ -51,7 +51,9 @@ if (empty($_SESSION['auth']) or $_SESSION['auth'] == false) {
 			<div class="avatar" style="text-align: center;">
 				<img style="min-width: 210" id="index_img"  src="../img/<? echo $user_data['avatar'];?>"></p>
 				<button onclick="location='../forum/add-forum.php'" class="button-login" style="width: 250px;">Добавить Обсуждение</button><br>
-				<button onclick="location='../add-news.php'" class="button-login" style="width: 250px;">Добавить Новость</button>
+				<button onclick="location='../add-news.php'" class="button-login" style="width: 250px;">Добавить Новость</button><br>
+				<button onclick="location='user_forum.php?id=<?php echo $user_data['id'];?>'" class="button-login" style="width: 250px;">Ваши Обсуждения</button><br>				
+				<button onclick="location='user_blog.php?id=<?php echo $user_data['id'];?>'" class="button-login" style="width: 250px;">Ваш Блог</button>
 			</div>
 
 			<div class="text">

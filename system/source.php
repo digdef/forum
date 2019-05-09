@@ -66,9 +66,9 @@ class article {
 				echo'<h1 style="text-align: center; padding-bottom: 10px; padding-top: 10px;">'.$art['title'].'</h1>';
 				echo'<div class="news-img">';
 				echo'<img src="'.$art['img'].'"></div>';
-				echo'<div class="news-text"><span>';
+				echo'<div class="news-text">';
 				echo $art['text'];
-				echo'</span></div></div></article>';
+				echo'</div></div></article>';
 			}
 
 			if ($table == 'forum') {
@@ -614,7 +614,9 @@ class add_news {
 
 	function __construct() {
 
-		include "config.php";	
+		include "config.php";
+
+		$name = $_SESSION['login'];
 
 		if (isset($_POST['do_post'])) {
 			$errors = array();
@@ -627,22 +629,13 @@ class add_news {
 			if ($_POST['text'] == '') {
 				$errors[] = 'Введите Текст!';
 			}
-			
+			if ($_POST['categories'] == '') {
+				$errors[] = 'выберите Категорию!';
+			}			
 			if (empty($errors)) {
 				echo '<span style="color: green;font-weight: bold;">Успех</span><br>';
 				mysqli_query($connection, "INSERT INTO `news` (`title`,`img`,`text`) VALUES ('".$_POST['title']."','".$_POST['img']."','".$_POST['text']."' )");
-			}
-			else{
-				echo '<span style="color: red;font-weight: bold;">'.$errors['0'].'</span>';
-			}
-		}
-		if (isset($_POST['do_post'])) {
-			$errors = array();
-			if ($_POST['categories'] == '') {
-				$errors[] = 'выберите Категорию!';
-			}
-			if (empty($errors)) {
-				echo '<span style="color: green;font-weight: bold;">Успех</span><br>';
+				mysqli_query($connection, "INSERT INTO `user_forum` (`title`,`name`) VALUES ('".$_POST['title']."','".$name."' )");
 				mysqli_query($connection, "INSERT INTO `genre` (`categories`,`title`) VALUES ('".$_POST['categories']."','".$_POST['title']."' )");
 			}
 			else{
@@ -658,6 +651,8 @@ class add_forum {
 
 		include "config.php";
 
+		$name = $_SESSION['login'];
+
 		if (isset($_POST['do_post'])) {
 			$errors = array();
 			if ($_POST['title'] == '') {
@@ -666,22 +661,13 @@ class add_forum {
 			if ($_POST['text'] == '') {
 				$errors[] = 'Введите Текст!';
 			}
-			
+			if ($_POST['categories'] == '') {
+				$errors[] = 'выберите Категорию!';
+			}			
 			if (empty($errors)) {
 				echo '<span style="color: green;font-weight: bold;">Успех</span><br>';
 				mysqli_query($connection, "INSERT INTO `forum` (`title`,`text`) VALUES ('".$_POST['title']."','".$_POST['text']."' )");
-			}
-			else{
-				echo '<span style="color: red;font-weight: bold;">'.$errors['0'].'</span>';
-			}
-		}
-		if (isset($_POST['do_post'])) {
-			$errors = array();
-			if ($_POST['categories'] == '') {
-				$errors[] = 'выберите Категорию!';
-			}
-			if (empty($errors)) {
-				echo '<span style="color: green;font-weight: bold;">Успех</span><br>';
+				mysqli_query($connection, "INSERT INTO `user_forum` (`title`,`name`) VALUES ('".$_POST['title']."','".$name."' )");
 				mysqli_query($connection, "INSERT INTO `genre_forum` (`categories`,`title`) VALUES ('".$_POST['categories']."','".$_POST['title']."' )");
 			}
 			else{
