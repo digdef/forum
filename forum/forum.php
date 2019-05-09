@@ -15,23 +15,10 @@ include "../system/config.php";
 <body>
 	<?php include"../view/forum-header.php";
 	$discussion = new forum();
+	$article = new article('forum');
 	$article = mysqli_query($connection, "SELECT * FROM `forum` WHERE `id` = ".(int) $_GET['id']);
 	$art = mysqli_fetch_assoc($article);
 	?>
-	<h1 style="text-align: center; padding-bottom: 10px; padding-top: 10px;">lorems</h1>
-	<div class='news'>
-		<div class="preview">
-			<div>
-				<h2>lorem</h2>
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-			</div>
-		</div>
-	</div>
 	<div class="box-comment container" >
 		<form action="forum.php?id=<? echo $art['id'];?>" method="POST">
 			<input style="display: none; width: 10%; float: left;" class="container" id="answer_nick" type="text" name="answer_nick" placeholder="Ответить Кому?">

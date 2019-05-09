@@ -54,20 +54,30 @@ class article {
 		$article = mysqli_query($connection, "SELECT * FROM $table WHERE `id` = ".(int) $_GET['id']);
 
 		if (mysqli_num_rows($article) <= 0) {
-			echo '<div id="article-main">';
-			echo '<div class="article-intro">';
+			echo '<div style="text-align: center;">';
+			echo '<div>';
 			echo '<h2>Статья не найдена !!!</h2>';
-			echo '<img style="max-width: 60%; max-height: 60%;" src="img/not.png">';
+			echo '<img style="max-width: 40%; max-height: 40%;" src="img/not.png">';
 			echo '</div></div>';
 		} else {
-			$art = mysqli_fetch_assoc($article);
-			echo'<article><div>';
-			echo'<h1 style="text-align: center; padding-bottom: 10px; padding-top: 10px;">'.$art['title'].'</h1>';
-			echo'<div class="news-img">';
-			echo'<img src="'.$art['img'].'"></div>';
-			echo'<div class="news-text"><span>';
-			echo $art['text'];
-			echo'</span></div></div></article>';
+			$art = mysqli_fetch_assoc($article);			
+			if ($table == 'news') {
+				echo'<article><div>';
+				echo'<h1 style="text-align: center; padding-bottom: 10px; padding-top: 10px;">'.$art['title'].'</h1>';
+				echo'<div class="news-img">';
+				echo'<img src="'.$art['img'].'"></div>';
+				echo'<div class="news-text"><span>';
+				echo $art['text'];
+				echo'</span></div></div></article>';
+			}
+
+			if ($table == 'forum') {
+				echo'<h1 style="text-align: center; padding-bottom: 10px; padding-top: 10px;">'.$art['title'].'</h1>';
+				echo'<div class="news"><div class="preview"><div>';
+				echo'<h2>'.$art['title'].'</h2>'.$art['text'];
+				echo'</div></div></div>';
+			}
+
 		}
 	}
 }
@@ -689,9 +699,9 @@ class page_categories {
 
 		$categor = mysqli_query($connection, "SELECT * FROM $table2 WHERE `id` = ".(int) $_GET['id']);
 		if (mysqli_num_rows($categor) <= 0) {
-			echo '<div><div>';
-			echo '<h2>Не Найдено!</h2>';
-			echo '<img style="max-width: 60%; max-height: 60%;" src="img/not.png">';
+			echo '<div style="text-align: center;"><div>';
+			echo '<h1>Не Найдено!</h1>';
+			echo '<img style="max-width: 40%; max-height: 40%;" src="img/not.png">';
 			echo '</div></div>';
 		} else {
 			$res=mysqli_query($connection,"SELECT * FROM $table2 ");
@@ -759,13 +769,14 @@ class user_article {
 		if (mysqli_num_rows($users) <= 0) {
 			echo '<div><div style="text-align: center;">';
 			echo '<h2>Неправельный Адрес!</h2>';
+			echo '<img style="max-width: 40%; max-height: 40%;" src="../img/not.png">';
 			echo '</div></div>';
 		} else {
 			if (mysqli_num_rows($user) <= 0) {
-				echo '<div id="article-main">';
-				echo '<div class="article-intro">';
-				echo '<h2>Тут Пусто!</h2>';
-				echo '<img style="max-width: 60%; max-height: 60%;" src="img/not.png">';
+				echo '<div style="text-align: center;">';
+				echo '<div>';
+				echo '<h1>Тут Пусто!</h1>';
+				echo '<img style="max-width: 40%; max-height: 40%;" src="../img/not.png">';
 				echo '</div></div>';
 			} else {
 				while ($data_user=mysqli_fetch_array($user)) {

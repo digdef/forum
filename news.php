@@ -11,6 +11,8 @@ include "system/config.php";
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>	
 	<title>forum</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="js/main.js"></script>
 </head>
 <body>
 	<?php
@@ -34,8 +36,5 @@ include "system/config.php";
 			<?php $coment->comments();?>
 		</div>	
 	</div>
-
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="js/main.js"></script>
 </body>
 </html>

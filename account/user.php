@@ -40,6 +40,12 @@ require "../system/config.php";
 	<?php
 	$users = mysqli_query($connection, "SELECT * FROM `users` WHERE `id` = ".(int) $_GET['id']);
 	$user = mysqli_fetch_assoc($users);
+	if (mysqli_num_rows($users) <= 0) {
+		echo '<div><div style="text-align: center;">';
+		echo '<h2>Неправельный Адрес!</h2>';
+		echo '<img style="max-width: 40%; max-height: 40%;" src="../img/not.png">';
+		echo '</div></div>';
+	} else {
 	?>
 	<div id="main">
 		<article style="display: inline-block;">
@@ -60,7 +66,7 @@ require "../system/config.php";
 			</div>
 		</article>
 	</div>
-
+<?}?>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="../js/main.js"></script>
 </body>
