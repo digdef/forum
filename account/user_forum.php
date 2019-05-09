@@ -37,30 +37,7 @@ require "../system/config.php";
 		<button class="sidebar-btn">Выйти</button>
 	</div>
 	<div style="padding-top: 70px;"></div>
-	<?php
-	$users = mysqli_query($connection, "SELECT * FROM `users` WHERE `id` = ".(int) $_GET['id']);
-	$user = mysqli_fetch_assoc($users);
-	?>
-	<div id="main">
-		<article style="display: inline-block;">
-			<div class="avatar" style="text-align: center;">
-				<img style="min-width: 210" id="index_img"  src="../img/<? echo $user['avatar'];?>"></p>
-			</div>
-			<div class="text">
-				<center>
-					<span id="name">
-						<?
-						echo $user['name']."<br>";
-						echo "Почта: ". $user['email']."<br>";
-						?>
-						<button onclick="location='user_blog.php?id=<?php echo $user['id'];?>'" class="button-login" style="width: 250px;">Блог</button><br>
-						<button onclick="location='user_forum.php?id=<?php echo $user['id'];?>'" class="button-login" style="width: 250px;">Обсуждения</button>
-					</span></p>
-				</center>
-			</div>
-		</article>
-	</div>
-
+	<?php $user_article = new user_article('user_forum','forum');?>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="../js/main.js"></script>
 </body>

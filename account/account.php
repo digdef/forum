@@ -44,7 +44,7 @@ if (empty($_SESSION['auth']) or $_SESSION['auth'] == false) {
 		<button onclick="location='../forum'" class="sidebar-btn">Форум</button>
 		<button class="sidebar-btn">Выйти</button>
 	</div>
-	<div style="padding-top: 50px;"></div>
+	<div style="padding-top: 70px;"></div>
 
 	<div id="main">
 		<article style="display: inline-block;">
