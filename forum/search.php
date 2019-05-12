@@ -11,7 +11,7 @@ require "../system/source.php";
 	<title>forum</title>
 </head>
 <body>
-	<?php include"../view/forum-header.php";?>
+	<?php include"../view/forum/forum-header.php";?>
 	<div style="padding-top: 20px;"></div>
 	<?
 	$search = new search('forum');

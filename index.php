@@ -11,7 +11,7 @@ require "system/source.php";
 	<title>forum</title>
 </head>
 <body>
-	<?php include"view/news-header.php";?>
+	<?php include"view/news/news-header.php";?>
 	<h1 style="text-align: center; padding-bottom: 10px; padding-top: 10px;">Новости</h1>
 	<?php $news = new News('news');?>
 	<div style="text-align: center;">

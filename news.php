@@ -16,7 +16,7 @@ include "system/config.php";
 </head>
 <body>
 	<?php
-	include"view/news-header.php";
+	include"view/news/news-header.php";
 	$news = new article('news');
 	$article = mysqli_query($connection, "SELECT * FROM `news` WHERE `id` = ".(int) $_GET['id']);
 	$art = mysqli_fetch_assoc($article);

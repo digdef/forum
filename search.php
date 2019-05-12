@@ -11,7 +11,7 @@ require "system/source.php";?>
 </head>
 <body>
 	<?
-	include"view/news-header.php";
+	include"view/news/news-header.php";
 	$search = new search('news');
 	?>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

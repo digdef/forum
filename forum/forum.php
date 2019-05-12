@@ -11,9 +11,20 @@ include "../system/config.php";
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>	
 	<title>forum</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="../js/main.js"></script>
+	<script>
+		function answer (name) {
+			var txt = name ;
+			var langg = document.getElementById ('answer_nick'); 
+			var nc = langg.selectionStart; 
+			langg.value = langg.value.substr (0, nc) + txt + langg.value.substr (nc);
+			langg.style.display = (langg.style.display == 'none') ? '' : 'none';
+		}
+	</script>
 </head>
 <body>
-	<?php include"../view/forum-header.php";
+	<?php include"../view/forum/forum-header.php";
 	$discussion = new forum();
 	$article = new article('forum');
 	$article = mysqli_query($connection, "SELECT * FROM `forum` WHERE `id` = ".(int) $_GET['id']);
@@ -32,16 +43,5 @@ include "../system/config.php";
 	<div class="comment-group">
 		<?php $discussion->discussion();?>
 	</div>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="../js/main.js"></script>
-	<script>
-		function answer (name) {
-			var txt = name ;
-			var langg = document.getElementById ('answer_nick'); 
-			var nc = langg.selectionStart; 
-			langg.value = langg.value.substr (0, nc) + txt + langg.value.substr (nc);
-			langg.style.display = (langg.style.display == 'none') ? '' : 'none';
-		}
-	</script>
 </body>
 </html>

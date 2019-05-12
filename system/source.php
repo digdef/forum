@@ -24,22 +24,13 @@ class News {
 
 		if ($table == 'news') {
 			while ($art = mysqli_fetch_assoc($articles)) {
-				echo'<article class="news"><div class="preview"><a style="padding-right: 20px;" href="">';
-				echo'<img class="img" src="'. $art['img'].'"></a>';
-				echo'<div style="width: 100%"><h2>'. $art['title'].'</h2>';
-				echo mb_substr(strip_tags($art['text']), 0, 500, 'utf-8');
-				echo'<br><button onclick="location=`news.php?id='.$art['id'].'`" class="news-link">Подробнее</button>';
-				echo'</div></div></article>';
+				include 'view/news/main-page-news.php';
 			}
 		}
 
 		if ($table == 'forum') {
 			while ($art = mysqli_fetch_assoc($articles)) {
-				echo'<article class="news"><div class="preview">';
-				echo'<div style="width: 100%"><h2>'. $art['title'].'</h2>';
-				echo mb_substr(strip_tags($art['text']), 0, 500, 'utf-8');
-				echo'<br><button onclick="location=`forum.php?id='.$art['id'].'`" class="news-link">Подробнее</button>';
-				echo'</div></div></article>';
+				include '../view/forum/main-page-forum.php';
 			}
 		}
 	}
@@ -54,28 +45,15 @@ class article {
 		$article = mysqli_query($connection, "SELECT * FROM $table WHERE `id` = ".(int) $_GET['id']);
 
 		if (mysqli_num_rows($article) <= 0) {
-			echo '<div style="text-align: center;">';
-			echo '<div>';
-			echo '<h2>Статья не найдена !!!</h2>';
-			echo '<img style="max-width: 40%; max-height: 40%;" src="img/not.png">';
-			echo '</div></div>';
+			include '404.php';
 		} else {
 			$art = mysqli_fetch_assoc($article);			
 			if ($table == 'news') {
-				echo'<article><div>';
-				echo'<h1 style="text-align: center; padding-bottom: 10px; padding-top: 10px;">'.$art['title'].'</h1>';
-				echo'<div class="news-img">';
-				echo'<img src="'.$art['img'].'"></div>';
-				echo'<div class="news-text">';
-				echo $art['text'];
-				echo'</div></div></article>';
+				include 'view/news/article.php';
 			}
 
 			if ($table == 'forum') {
-				echo'<h1 style="text-align: center; padding-bottom: 10px; padding-top: 10px;">'.$art['title'].'</h1>';
-				echo'<div class="news"><div class="preview"><div>';
-				echo'<h2>'.$art['title'].'</h2>'.$art['text'];
-				echo'</div></div></div>';
+				include '../view/forum/article.php';
 			}
 
 		}
@@ -124,17 +102,11 @@ class comment {
 		$comments = mysqli_query($connection, "SELECT * FROM `comment` WHERE `news_id` = '". (int) $art['id']."' ORDER BY `id` DESC");
 
 		if (mysqli_num_rows($comments) <= 0) {
-			echo'<div id="comment">';
-			echo'<div style="text-align: center; width: 100%" id="comment1">';
-			echo'<h3>Нет Комментариев!</h3></div></div>';
+			include 'view/news/not-comments.php';
 		}
 
 		while ($comment = mysqli_fetch_assoc($comments)) {
-			echo '<div id="comment"><div>';
-			echo '<div style="text-align: center;">';
-			echo '<span>'. $comment['nick'].'</span></div>';
-			echo '<img id="avatar_img" src="img/'.$comment['avatar'].'"></p></div>';
-			echo '<div id="comment1"><span>'.$comment['text'].'</span></div></div>';
+			include 'view/news/comments.php';
 		}
 	}
 
@@ -506,22 +478,11 @@ class forum {
 		$comments = mysqli_query($connection, "SELECT * FROM `discussion` WHERE `discussion_id` = '". (int) $art['id']."' ORDER BY `id` DESC");
 
 		if (mysqli_num_rows($comments) <= 0) {
-			echo'<div id="comment">';
-			echo'<div style="text-align: center; width: 100%" id="comment1">';
-			echo'<h3>Нет Обсуждений!</h3></div></div>';
+			include '../view/forum/not-discussion.php';
 		}
 
 		while ($comment = mysqli_fetch_assoc($comments)) {
-			echo '<div id="comment"><div>';
-			echo '<div style="text-align: center;">';
-			echo '<span>'.$comment['nick'].'</span></div>';
-			echo '<img id="avatar_img" src="../img/'.$comment['avatar'].'"></p></div>';
-			echo '<div id="comment1"><span>';
-			echo $comment['answer_nick'];
-			echo $comment['text'];
-			echo '<br></span>';
-			echo '<button class="news-link forum-link" onclick="answer(`'.$comment['nick'].'`)">Ответить</button>';
-			echo '</div></div>';
+			include '../view/forum/discussion.php';
 		}
 	}
 }
@@ -685,10 +646,7 @@ class page_categories {
 
 		$categor = mysqli_query($connection, "SELECT * FROM $table2 WHERE `id` = ".(int) $_GET['id']);
 		if (mysqli_num_rows($categor) <= 0) {
-			echo '<div style="text-align: center;"><div>';
-			echo '<h1>Не Найдено!</h1>';
-			echo '<img style="max-width: 40%; max-height: 40%;" src="img/not.png">';
-			echo '</div></div>';
+			include '404.php';
 		} else {
 			$res=mysqli_query($connection,"SELECT * FROM $table2 ");
 			$user_data=mysqli_fetch_array($categor);
@@ -701,12 +659,7 @@ class page_categories {
 					$sub1=$sub['title'];
 					$news = mysqli_query($connection, "SELECT * FROM $table WHERE `title`='$sub1' ORDER BY `id` DESC");
 					$art = mysqli_fetch_assoc($news);
-					echo'<article class="news"><div class="preview"><a style="padding-right: 20px;" href="">';
-					echo'<img class="img" src="'. $art['img'].'"></a>';
-					echo'<div style="width: 100%"><h2>'. $art['title'].'</h2>';
-					echo mb_substr(strip_tags($art['text']), 0, 500, 'utf-8');
-					echo'<br><button onclick="location=`news.php?id='.$art['id'].'`" class="news-link">Подробнее</button>';
-					echo'</div></div></article>';
+					include 'view/news/main-page-news.php';
 				}
 			}
 
@@ -715,11 +668,7 @@ class page_categories {
 					$sub1=$sub['title'];
 					$news = mysqli_query($connection, "SELECT * FROM $table WHERE `title`='$sub1' ORDER BY `id` DESC");
 					$art = mysqli_fetch_assoc($news);
-					echo'<article class="news"><div class="preview">';
-					echo'<div style="width: 100%"><h2>'. $art['title'].'</h2>';
-					echo mb_substr(strip_tags($art['text']), 0, 500, 'utf-8');
-					echo'<br><button onclick="location=`forum.php?id='.$art['id'].'`" class="news-link">Подробнее</button>';
-					echo'</div></div></article>';
+					include '../view/forum/main-page-forum.php';
 				}
 			}
 		} 
@@ -753,10 +702,7 @@ class user_article {
 		$user=mysqli_query($connection,"SELECT * FROM $table WHERE `name`='$name' ");
 
 		if (mysqli_num_rows($users) <= 0) {
-			echo '<div><div style="text-align: center;">';
-			echo '<h2>Неправельный Адрес!</h2>';
-			echo '<img style="max-width: 40%; max-height: 40%;" src="../img/not.png">';
-			echo '</div></div>';
+			include '404.php';
 		} else {
 			if (mysqli_num_rows($user) <= 0) {
 				echo '<div style="text-align: center;">';
@@ -772,20 +718,11 @@ class user_article {
 					$art = mysqli_fetch_assoc($article);
 
 					if ($table2 == 'news') {
-						echo'<article class="news"><div class="preview"><a style="padding-right: 20px;" href="">';
-						echo'<img class="img" src="'. $art['img'].'"></a>';
-						echo'<div style="width: 100%"><h2>'. $art['title'].'</h2>';
-						echo mb_substr(strip_tags($art['text']), 0, 500, 'utf-8');
-						echo'<br><button onclick="location=`../news.php?id='.$art['id'].'`" class="news-link">Подробнее</button>';
-						echo'</div></div></article>';
+						include '../view/news/forum-page-news.php';
 					}
 
 					if ($table2 == 'forum') {
-						echo'<article class="news"><div class="preview">';
-						echo'<div style="width: 100%"><h2>'. $art['title'].'</h2>';
-						echo mb_substr(strip_tags($art['text']), 0, 500, 'utf-8');
-						echo'<br><button onclick="location=`../forum.php?id='.$art['id'].'`" class="news-link">Подробнее</button>';
-						echo'</div></div></article>';
+						include '../view/forum/forum-page-forum.php';
 					}
 				}
 			}
